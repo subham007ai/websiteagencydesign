@@ -1,56 +1,78 @@
-# Sitora — Creative Web Design Agency
+# Sitora — Premium Creative Web Design Agency
 
-A scrollytelling agency website. The visitor doesn't browse a site — they watch
-an idea become a launched, growing digital product as they scroll. The page is
-the proof of capability.
+Sitora is a high-end web design and engineering studio portfolio website. Designed around premium typographic restraint, organic textures, and dynamic scroll-driven themes, Sitora showcases how strategy, design, and engineering converge into products that capture attention and drive revenue.
 
-**Narrative color progression:** scenes 01–07 evolve the accent from monochrome
-→ blue → purple → green → orange → gold (see `lib/stages.ts`), so the viewer
-subconsciously feels the product maturing. Scenes 08–10 hand the accent to the
-visitor's industry choice.
+---
 
-## The 10 scenes
+## 🎨 Design Philosophy & Aesthetics
 
-| # | Scene | What happens |
-|---|-------|--------------|
-| 01 | The Idea | Dark canvas, ambient 3D particles, a typewriter brief |
-| 02 | Discovery & Strategy | Sticky-note strategy board with self-drawing connections |
-| 03 / 04 | Wireframe → Design | **Pinned, scroll-scrubbed.** The wireframe draws itself, then floods into a premium UI |
-| 05 | Development | Self-typing code editor + build pipeline |
-| 06 | Launch | Deploy progress, screen flash, success ticket |
-| 07 | Growth & Results | Count-up KPIs + a rising chart (industry-aware) |
-| 08 | Industry Selector | Pick a path — the whole site recolors and re-content |
-| 09 | Case Studies | Expandable Challenge → Outcome story (industry-aware) |
-| 10 | Final CTA | Conversational lead form (React Hook Form + Zod) |
+Sitora moves away from generic, cookie-cutter agency designs to offer an atmospheric, premium experience:
+- **Atmospheric Depth**: Utilizes a global filmic grain overlay (`Grain`) and responsive, custom radial glows (`Aurora`) mimicking modern high-end developer consoles.
+- **Dynamic Accent Theme (Intersection Observer)**: Sections declare their own accent color themes via `data-accent` and `data-accent-2` attributes. As you scroll, `AccentTheme` interceptively transitions root-level CSS properties (`--accent`, `--accent-rgb`, etc.) on the fly, instantly transforming the site's palette without heavy re-renders.
+- **Generative Cover Art (`MeshCover`)**: deterministic, seeded SVGs use turbulence, gaussian blur, and composite matrices to output organic gradient visuals for projects and blog covers instead of plain image placeholders.
+- **Micro-interactions & Smoothness**: Syncs native scrolling with a customized kinetic feel using `Lenis`, combined with mask-clipped kinetic text reveals and magnetic hover effects.
 
-## Stack
+---
 
-- **Next.js 15** (App Router) · React 19 · TypeScript · Tailwind CSS
-- **GSAP + ScrollTrigger** — pinning and scroll-scrubbed scene timelines
-- **Lenis** — smooth scrolling, synced to ScrollTrigger
-- **Framer Motion** — reveals, micro-interactions, layout transitions
-- **Three.js / React Three Fiber** — the ambient particle field in Scene 01
-- **React Hook Form + Zod** — the contact form
+## 🛠️ Key Interactive Modules
 
-## Run it
+### 🧮 Interactive Scope Cost Calculator (`/pricing`)
+An intuitive, slider-driven estimator allowing prospective clients to structure custom projects.
+- **Adjustable Parameters**: Project Complexity (Landing Page to Custom Platforms), Motion Fidelity (Static, Fluid, or Immersive GSAP), and Backend integrations (None, Supabase/Database, or Complex APIs).
+- **Dual Currency Support**: Switch values seamlessly between Indian Rupees (₹ INR) with GST billing configurations, and US Dollars ($ USD).
+- **Smart Estimation**: Dynamically calculates estimated budgets and delivery timelines in real-time, feeding parameters straight to the inquiry page.
 
+### 📝 Smart Multi-Step Contact Form (`/contact`)
+An advanced client intake portal that acts as a live project advisor.
+- **Stack**: Validated with `Zod` schema parsing and powered by `React Hook Form`.
+- **Dynamic Visual Summary**: As users toggle service chips, budges, and timelines, a live sliding card displays their estimated package name, timeline, and key feature checklist.
+- **Spam Mitigation**: Includes a hidden honeypot validation field (`website_hp`) to silently filter bot submissions without disrupting user flows.
+
+---
+
+## ⚙️ Technical Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Runtime**: React 19
+- **Styling**: Tailwind CSS 3
+- **Motion & Interactions**: Framer Motion 11 & Lenis Smooth Scroll
+- **Form & Validation**: React Hook Form 7 & Zod 3
+
+---
+
+## 🔍 Git Repository Audit
+
+As part of the repository maintenance, a systematic audit was conducted to verify what files are tracked and what remains excluded from the public codebase to maintain security and performance hygiene.
+
+| Path | Status | Reason / Explanation |
+| :--- | :---: | :--- |
+| `app/`, `components/`, `lib/` | **Pushed** | Core application pages, routing setups, design system components, and assets. |
+| `tailwind.config.ts`, `next.config.mjs`, `tsconfig.json` | **Pushed** | Project configurations (CSS compiler settings, routing parameters, and type constraints). |
+| `package.json`, `package-lock.json` | **Pushed** | Dependency list and locks to ensure consistent local installations. |
+| `.vscode/settings.json` | **Pushed** | Standard workspace settings (ignores custom `@apply` warnings in Tailwind/PostCSS). |
+| `node_modules/` | **Excluded** | Large dependency packages; easily reinstalled locally via npm. |
+| `.next/` | **Excluded** | Next.js build caching and compilation outputs. |
+| `next-env.d.ts` | **Excluded** | Auto-generated TypeScript types configured dynamically by Next.js. |
+| `.claude/` | **Excluded** | Local IDE agent state config files; added to `.gitignore`. |
+
+---
+
+## 🚀 Getting Started
+
+### 1. Install Dependencies
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build
 ```
 
-## How personalization works
+### 2. Run Development Server
+```bash
+npm run dev
+# Opens local instance at http://localhost:3000
+```
 
-`components/IndustryContext.tsx` holds the selected industry and writes its
-accent into CSS custom properties (`--accent`, `--accent-2`, `--accent-rgb`), so
-the entire site recolors instantly. Per-industry content (metrics, case study,
-testimonial) lives in `lib/industries.ts` — edit there to retune the copy.
-
-## Notes
-
-- Every scene respects `prefers-reduced-motion` (particles, typewriters, pins,
-  and count-ups all degrade to static/instant states).
-- The contact form is wired to a simulated submit (`console.log`). Swap
-  `onSubmit` in `SceneContact.tsx` for a server action / Supabase insert to go
-  live. Analytics (GA / PostHog) can be added in `app/layout.tsx`.
+### 3. Production Compilation
+Ensure type checks, lint checks, and pre-renders compile cleanly:
+```bash
+npm run build
+npm run start
+```
